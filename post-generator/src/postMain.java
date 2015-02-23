@@ -26,5 +26,6 @@ public class postMain extends JFrame{
 		GECObj.setSize(600,400);
 		GECObj.setVisible(true);
 		
+		
 	}
 }
