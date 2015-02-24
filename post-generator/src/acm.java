@@ -80,6 +80,7 @@ public class acm {
 		panel.setLayout(null);
 		
 		JButton btnCreateNewPost = new JButton("Create New Post");
+		btnCreateNewPost.setFocusable(false);
 		btnCreateNewPost.setBounds(145, 12, 153, 25);
 		panel.add(btnCreateNewPost);
 	}
