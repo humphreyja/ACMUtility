@@ -392,6 +392,14 @@ public class acm extends JFrame {
 		});
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String postdate=(String) CBDay.getItemAt(CBDay.getSelectedIndex()) + "-" + (String) CBMonth.getItemAt(CBMonth.getSelectedIndex()) + "-" + (String) CBYear.getItemAt(CBYear.getSelectedIndex());
+				checkContents contentChecker = new checkContents();
+				if(!contentChecker.isDateValid(postdate)){
+					System.out.println("Date is invalid");
+				}
+				if (textName.getText().isEmpty()) {
+				    // Message box
+				}
 				post_creator.setVisible(false);
 				finalPanel.setVisible(true);
 				acmMain.setBounds(100,100,450,300);
@@ -408,4 +416,6 @@ public class acm extends JFrame {
 		btnCreateNewPost.setBounds(145, 12, 153, 25);
 		panel.add(btnCreateNewPost);
 	}
+	
+	
 }
