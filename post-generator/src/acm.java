@@ -30,18 +30,23 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 
 import javax.swing.JEditorPane;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
 import java.awt.SystemColor;
+
 import javax.swing.JCheckBox;
 
 
@@ -392,17 +397,30 @@ public class acm extends JFrame {
 		});
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				boolean validEntry=true;
+				
+				
+				
+				
 				String postdate=(String) CBDay.getItemAt(CBDay.getSelectedIndex()) + "-" + (String) CBMonth.getItemAt(CBMonth.getSelectedIndex()) + "-" + (String) CBYear.getItemAt(CBYear.getSelectedIndex());
 				checkContents contentChecker = new checkContents();
 				if(!contentChecker.isDateValid(postdate)){
-					System.out.println("Date is invalid");
+					validEntry = false;
 				}
 				if (textName.getText().isEmpty()) {
 				    // Message box
 				}
-				post_creator.setVisible(false);
-				finalPanel.setVisible(true);
-				acmMain.setBounds(100,100,450,300);
+				
+				
+				
+				if(validEntry){
+					post_creator.setVisible(false);
+					finalPanel.setVisible(true);
+					acmMain.setBounds(100,100,450,300);
+				}else{
+					JOptionPane.showMessageDialog(null, contentChecker.getError());
+				}
 			}
 		});
 		btnNewPost.addActionListener(new ActionListener() {
