@@ -1,0 +1,22 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=java -jar ~/git/msumacm_post_generator/post-generator/src/latestBuild/acm-util.jar
+GenericName[en_US]=
+GenericName=
+Icon=/srv/www/v-hosts/msumacm/assets/img/penguin_superhero.svg
+MimeType=
+Name[en_US]=acm-util
+Name=acm-util
+OnlyShowIn=KDE;
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+X-KDE-autostart-after=kdesktop
+X-KDE-autostart-condition=SuSEgreeterrc:General:FirstLogin103:true
