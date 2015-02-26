@@ -54,7 +54,11 @@ public class acm extends JFrame {
 	private JTextField txtHttp;
 	private JTextField txtlocation;
 	private JTextField textField;
-
+	private String directoryString = System.getProperty("user.dir"); 
+	private String OS;
+	private int postHeight;
+	private int postWidth;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -88,8 +92,24 @@ public class acm extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		String imgDir = directoryString;
+		
+		if (directoryString.contains(":\\"))
+		{
+			OS = "Windows";
+			imgDir = imgDir+"\\src\\acm\\";
+			postHeight = 668;
+			postWidth = 664;
+		}else{
+			OS = "Unix";
+			imgDir = imgDir+"/src/acm/";
+			postHeight = 668;
+			postWidth = 651;
+		}
+		
+		
 		acmMain = new JFrame();
-		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero_icon.png"));
+		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(imgDir + "penguin_superhero_icon.png"));
 		acmMain.setTitle("MSUM ACM Utility");
 		acmMain.setBounds(100, 100, 450, 300);
 		acmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,7 +128,7 @@ public class acm extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(imgDir + "penguin_superhero.png"));
 		lblNewLabel_2.setBounds(0, 12, 448, 112);
 		finalPanel.add(lblNewLabel_2);
 		
@@ -375,7 +395,7 @@ public class acm extends JFrame {
 		home.add(lblNewLabel);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
+		lblNewLabel.setIcon(new ImageIcon(imgDir + "penguin_superhero.png"));
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 166, 448, 50);
@@ -387,7 +407,7 @@ public class acm extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				home.setVisible(false);
 				post_creator.setVisible(true);
-				acmMain.setBounds(100, 100, 651, 668);
+				acmMain.setBounds(100, 100, postWidth, postHeight);
 			}
 		});
 		btnCreate.addActionListener(new ActionListener() {
@@ -395,13 +415,14 @@ public class acm extends JFrame {
 				post_creator.setVisible(false);
 				finalPanel.setVisible(true);
 				acmMain.setBounds(100,100,450,300);
+				System.out.println("Dir: " + System.getProperty("user.dir"));
 			}
 		});
 		btnNewPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				finalPanel.setVisible(false);
 				post_creator.setVisible(true);
-				acmMain.setBounds(100, 100, 651, 668);
+				acmMain.setBounds(100, 100, postWidth, postHeight);
 			}
 		});
 		btnCreateNewPost.setFocusable(false);
