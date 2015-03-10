@@ -1,53 +1,37 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-import java.awt.FlowLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-
-import javax.swing.JTextField;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
+import java.awt.EventQueue;
 import java.awt.Font;
-
-import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JTextArea;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.CardLayout;
-
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 public class acm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame acmMain;
 	private final JPanel home = new JPanel();
 	private JTextField textName;
@@ -55,7 +39,11 @@ public class acm extends JFrame {
 	private JTextField txtHttp;
 	private JTextField txtlocation;
 	private JTextField textField;
-
+	private String directoryString = System.getProperty("user.dir"); 
+	private String OS;
+	private int postHeight;
+	private int postWidth;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -89,14 +77,31 @@ public class acm extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		String imgDir = directoryString;
+		
+		if (directoryString.contains(":\\"))
+		{
+			OS = "Windows";
+			imgDir = imgDir+"\\src\\acm\\";
+			postHeight = 668;
+			postWidth = 664;
+		}else{
+			OS = "Unix";
+			imgDir = imgDir+"/src/acm/";
+			postHeight = 668;
+			postWidth = 651;
+		}
+		
+		
 		acmMain = new JFrame();
-		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero_icon.png"));
+		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(imgDir + "penguin_superhero_icon.png"));
 		acmMain.setTitle("MSUM ACM Utility");
 		acmMain.setBounds(100, 100, 450, 300);
 		acmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		acmMain.getContentPane().setLayout(new CardLayout(0, 0));
 		acmMain.getContentPane().add(home, "name_273493709313831");
 		home.setLayout(null);
+		home.setBounds(0, 12, 448, 220);
 		
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the MSUM ACM content utility.");
 		lblWelcomeToThe.setBounds(0, 0, 448, 15);
@@ -108,7 +113,7 @@ public class acm extends JFrame {
 		home.add(lblNewLabel);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
+		lblNewLabel.setIcon(new ImageIcon(imgDir + "penguin_superhero.png"));
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 166, 448, 50);
@@ -132,7 +137,7 @@ public class acm extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(imgDir + "penguin_superhero.png"));
 		lblNewLabel_2.setBounds(0, 12, 448, 112);
 		finalPanel.add(lblNewLabel_2);
 		
@@ -387,26 +392,44 @@ public class acm extends JFrame {
 		
 		btnCreate.setBounds(521, 572, 117, 30);
 		post_creator.add(btnCreate);
+
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String postdate=(String) CBDay.getItemAt(CBDay.getSelectedIndex()) + "-" + (String) CBMonth.getItemAt(CBMonth.getSelectedIndex()) + "-" + (String) CBYear.getItemAt(CBYear.getSelectedIndex());
+				checkContents contentChecker = new checkContents();
+				if(!contentChecker.isDateValid(postdate)){
+					System.out.println("Date is invalid");
+				}
+				if (textName.getText().isEmpty()) {
+				    // Message box
+				}
 				post_creator.setVisible(false);
 				finalPanel.setVisible(true);
 				acmMain.setBounds(100,100,450,300);
+				System.out.println("Dir: " + System.getProperty("user.dir"));
 			}
 		});
 		btnNewPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				finalPanel.setVisible(false);
 				post_creator.setVisible(true);
-				acmMain.setBounds(100, 100, 651, 668);
+				acmMain.setBounds(100, 100, postWidth, postHeight);
 			}
 		});
+
+		
+		
+		
+		
+		
 		btnCreateNewPost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				home.setVisible(false);
 				post_creator.setVisible(true);
-				acmMain.setBounds(100, 100, 651, 668);
+				acmMain.setBounds(100, 100, postWidth, postHeight);
 			}
 		});
 	}
+	
+	
 }
