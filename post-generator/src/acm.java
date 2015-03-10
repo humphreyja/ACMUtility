@@ -43,6 +43,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.SystemColor;
 import javax.swing.JCheckBox;
+import java.awt.CardLayout;
 
 
 public class acm extends JFrame {
@@ -93,13 +94,36 @@ public class acm extends JFrame {
 		acmMain.setTitle("MSUM ACM Utility");
 		acmMain.setBounds(100, 100, 450, 300);
 		acmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		acmMain.getContentPane().setLayout(null);
+		acmMain.getContentPane().setLayout(new CardLayout(0, 0));
+		acmMain.getContentPane().add(home, "name_273493709313831");
+		home.setLayout(null);
+		
+		JLabel lblWelcomeToThe = new JLabel("Welcome to the MSUM ACM content utility.");
+		lblWelcomeToThe.setBounds(0, 0, 448, 15);
+		home.add(lblWelcomeToThe);
+		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 448, 166);
+		home.add(lblNewLabel);
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 166, 448, 50);
+		home.add(panel);
+		panel.setLayout(null);
+		
+		JButton btnCreateNewPost = new JButton("Create New Post");
+		
+		btnCreateNewPost.setFocusable(false);
+		btnCreateNewPost.setBounds(145, 12, 153, 25);
+		panel.add(btnCreateNewPost);
 		
 		JPanel finalPanel = new JPanel();
-		finalPanel.setBounds(0, 12, 448, 220);
-		acmMain.getContentPane().add(finalPanel);
+		acmMain.getContentPane().add(finalPanel, "name_273493460363616");
 		finalPanel.setLayout(null);
-		finalPanel.setVisible(false);
 		
 		JLabel lblNewLabel_1 = new JLabel("Your new post has been created");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -127,10 +151,8 @@ public class acm extends JFrame {
 		finalPanel.add(btnNewPost);
 		
 		JPanel post_creator = new JPanel();
-		post_creator.setBounds(0, 12, 650, 614);
-		acmMain.getContentPane().add(post_creator);
+		acmMain.getContentPane().add(post_creator, "name_273493594208610");
 		post_creator.setLayout(null);
-		post_creator.setVisible(false);
 		
 		JLabel lblPostTypeName = new JLabel("Workshop");
 		lblPostTypeName.setFont(new Font("Dialog", Font.BOLD, 22));
@@ -323,13 +345,18 @@ public class acm extends JFrame {
 		dtrpnPostContent.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				dtrpnPostContent.setText("Post Content");
+				if(dtrpnPostContent.getText().isEmpty())
+				{
+					dtrpnPostContent.setText("Post Content");
+				}
+				
 			}
 		});
 		dtrpnPostContent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				dtrpnPostContent.setText("");
+				if(dtrpnPostContent.getText().equals("Post Content"))
+					dtrpnPostContent.setText("");
 			}
 		});
 		
@@ -360,36 +387,6 @@ public class acm extends JFrame {
 		
 		btnCreate.setBounds(521, 572, 117, 30);
 		post_creator.add(btnCreate);
-		//post_creator.add(dtrpnPostContent);
-		home.setBounds(0, 12, 448, 220);
-		acmMain.getContentPane().add(home);
-		home.setLayout(null);
-		
-		JLabel lblWelcomeToThe = new JLabel("Welcome to the MSUM ACM content utility.");
-		lblWelcomeToThe.setBounds(0, 0, 448, 15);
-		home.add(lblWelcomeToThe);
-		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 448, 166);
-		home.add(lblNewLabel);
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("/home/jake/git/msumacm_post_generator/post-generator/src/acm/penguin_superhero.png"));
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 166, 448, 50);
-		home.add(panel);
-		panel.setLayout(null);
-		
-		JButton btnCreateNewPost = new JButton("Create New Post");
-		btnCreateNewPost.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				home.setVisible(false);
-				post_creator.setVisible(true);
-				acmMain.setBounds(100, 100, 651, 668);
-			}
-		});
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				post_creator.setVisible(false);
@@ -404,8 +401,12 @@ public class acm extends JFrame {
 				acmMain.setBounds(100, 100, 651, 668);
 			}
 		});
-		btnCreateNewPost.setFocusable(false);
-		btnCreateNewPost.setBounds(145, 12, 153, 25);
-		panel.add(btnCreateNewPost);
+		btnCreateNewPost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				home.setVisible(false);
+				post_creator.setVisible(true);
+				acmMain.setBounds(100, 100, 651, 668);
+			}
+		});
 	}
 }
