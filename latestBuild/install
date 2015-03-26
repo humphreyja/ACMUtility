@@ -1,14 +1,40 @@
 #!/bin/bash
 
+function help {
+	echo "Usage:"
+	echo "    install [-f (--force) | -h (--help)]"
+	echo
+	echo "Installs the acm-util Gui."
+	echo "Program: ACM-Util generates the posts used in the ACM jekyll based website"
+	echo
+	echo "-f (--force)    Forces the install.  This over writes files!"
+	echo "                     Run it in standard form first"
+	echo "-h (--help)     This message"
+	exit 1
+}
+
 if [ "$(id -u)" != "0" ]; then
         echo "Require 'sudo' for install"
+	echo "Use 'install -h (or --help)' for more info"
         exit 1
 fi
 
 forceinstall=0
-if [[ "e$1" =~ "e-f" ]];then
-	forceinstall=1;
-fi 
+if [ $# -gt 0 ];then
+	if [ "e$1" == "e-f" ];then
+		forceinstall=1;
+	elif [ "e$1" == "e--force" ];then
+		forceinstall=1;
+	elif [ "e$1" == "e-h" ];then
+		help
+	elif [ "e$1" == "e--help" ];then
+		help
+	else
+		echo "Invalid Arguments"
+		echo "Use 'install -h (or --help)' for more info"
+		exit 1
+	fi
+fi
 
 newfolder=1;
 
@@ -28,14 +54,15 @@ if [ -f /bin/acm-util ];then
 fi
 fi
 
-if [[ "e" != "e$msg" ]];then
+if [ "e" != "e$msg" ];then
 	echo "ERROR: $msg"
+	echo "Use 'install -h (or --help)' for more info"
 	exit 1
 fi
 if [ $newfolder -eq 1 ];then
-	mkdir /etc/msumacm
+	mkdir /etc/msumacm &>/dev/null
 fi
-mkdir /etc/msumacm/postgenerator
+mkdir /etc/msumacm/postgenerator &>/dev/null
 cp ./acm-util.jar /etc/msumacm/postgenerator
 cp -R ./data /etc/msumacm/postgenerator
 cp ./acm-util.desktop /usr/share/applications
