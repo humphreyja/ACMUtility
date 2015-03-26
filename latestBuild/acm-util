@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if which java >/dev/null 2>&1 ; then
+	java -jar /etc/msumacm/postgenerator/acm-util.jar
+else
+	echo "Error: Java not installed or not found"
+fi
+

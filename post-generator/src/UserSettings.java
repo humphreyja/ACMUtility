@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,7 +18,7 @@ import org.w3c.dom.Node;
 public class UserSettings {
 	private String repoLocation = "";
 	private File userFile;
-
+	private boolean FileMade;
 	public String getRepoLocation() {
 		return repoLocation;
 	}
@@ -55,40 +56,61 @@ public class UserSettings {
 	}
 	public void writeDataFile()
 	{
-		try {
-			 
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-	 
-			// root elements
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("settings");
-			doc.appendChild(rootElement);
-	 
-			// staff elements
-			Element data = doc.createElement("data");
-			rootElement.appendChild(data);
-	 
-			// repo element
-			Element repox = doc.createElement("repository");
-			repox.appendChild(doc.createTextNode(this.getRepoLocation()));
-			data.appendChild(repox);
-	 
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(this.userFile);
-	 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-	 
-			transformer.transform(source, result);
-	 
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch (TransformerException tfe) {
-			tfe.printStackTrace();
-		}
+		
+		if (!this.userFile.exists())
+		{
+			this.FileMade = false;
+			System.out.println("Creating new data file");
+			File msumdir = new File(System.getProperty("user.home") + File.separator + ".msumacm");
+			boolean msumdirMade = (!msumdir.exists()) ? msumdir.mkdir() : true;
+			File postgeneratordir = new File(System.getProperty("user.home") + File.separator + ".msumacm" + File.separator + "postgenerator");
+			boolean postGeneratorDirMade = (!postgeneratordir.exists()) ? postgeneratordir.mkdir() : true;
+			File newUserFile = new File(System.getProperty("user.home") + File.separator + ".msumacm" + File.separator + "postgenerator" + File.separator + "UserData");
+			try {
+				this.FileMade =  (msumdirMade && postGeneratorDirMade) ? newUserFile.createNewFile() : false;
+			} catch (IOException e) {
+				System.out.println("Error creating new data file. Your settings will not be saved!");
+			}
+		}else
+			this.FileMade = true;
+		
+		if (this.FileMade){
+			try {
+				 
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		 
+				// root elements
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("settings");
+				doc.appendChild(rootElement);
+		 
+				// staff elements
+				Element data = doc.createElement("data");
+				rootElement.appendChild(data);
+		 
+				// repo element
+				Element repox = doc.createElement("repository");
+				repox.appendChild(doc.createTextNode(this.getRepoLocation()));
+				data.appendChild(repox);
+		 
+				// write the content into xml file
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(this.userFile);
+		 
+				// Output to console for testing
+				// StreamResult result = new StreamResult(System.out);
+		 
+				transformer.transform(source, result);
+		 
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+			}
+		}else
+			System.out.println("Error: Writing data file.  Your settings were not saved!");
 	}
 }

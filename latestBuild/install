@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [ "$(id -u)" != "0" ]; then
+        echo "Require 'sudo' for install"
+        exit 1
+fi
+
+forceinstall=false
+if [[ $1 =~ "-f" ]];then
+	forceinstall=true;
+fi 
+
+newfolder=true;
+
+if [ $forceinstall ];then
+	echo "Forcing install..."
+else
+if [ -d /etc/msumacm ]; then
+	files=/etc/msumacm/*;
+	if [ ${#files[@]} -gt 0 ];then
+        	msg="Directory '/etc/msumacm' already exists and is full"
+	else
+		newfolder=false;
+	fi
+fi
+if [ -f /bin/acm-util ];then
+	msg="File '/bin/acm-util' already exists"
+fi
+fi
+
+if [[ "e" != "e$msg" ]];then
+	echo "ERROR: $msg"
+	exit 1
+fi
+if [ $newfolder ];then
+	mkdir /etc/msumacm
+fi
+mkdir /etc/msumacm/postgenerator
+cp ./acm-util.jar /etc/msumacm/postgenerator
+cp -R ./data /etc/msumacm/postgenerator
+cp ./acm-util.desktop /usr/share/applications
+cp ./acm-util /bin
+chown root /bin/acm-util
+chgrp root /bin/acm-util
+chmod 777 /bin/acm-util
+chown -R root /etc/msumacm
+chgrp -R root /etc/msumacm
+chmod -R 755 /etc/msumacm
+
+echo "done."
+

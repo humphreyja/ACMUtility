@@ -32,6 +32,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class acm extends JFrame {
@@ -47,12 +48,14 @@ public class acm extends JFrame {
 	private JTextField txtHttp;
 	private JTextField txtlocation;
 	private JTextField textField;
-	private String directoryString = System.getProperty("user.dir"); 
 	private int postHeight;
 	private int postWidth;
 	private File userFile;
 	private JFileChooser chooser;
 	private post postObject;
+	private String path = System.getProperty("user.home");
+	private String userDataFile = this.path + File.separator + ".msumacm" + File.separator + "postgenerator" + File.separator + "UserData";
+	private String dataFolder;
 	
 	/**
 	 * Launch the application.
@@ -87,14 +90,25 @@ public class acm extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		String sourceDir = directoryString;
+		try {
+			path = new File(".").getCanonicalPath();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		this.dataFolder = path + this.dataFolder;
 		postHeight = 668;
-		if (directoryString.contains(":\\"))
+		if (System.getProperty("os.name").startsWith("Windows"))
+		{
+			this.dataFolder = "C:\\Programs\\msumacm\\postgenerator\\data\\";
 			postWidth = 664;
+		}
 		else
+		{
+			this.dataFolder = "/etc/msumacm/postgenerator/data/";
 			postWidth = 651;
-		sourceDir = sourceDir + File.separatorChar + "src" + File.separatorChar + "acm" + File.separatorChar;
-		userFile = new File(sourceDir + "UserData");
+		}
+		userFile = new File(this.userDataFile);
 		sourceControl gitObj = new sourceControl();
 		UserSettings userDataObj = new UserSettings();
 		userDataObj.setUserFile(userFile);
@@ -120,7 +134,7 @@ public class acm extends JFrame {
 		
 		acmMain = new JFrame();
 		acmMain.setResizable(false);
-		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(sourceDir + "penguin_superhero_icon.png"));
+		acmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(this.dataFolder + "penguin_superhero_icon.png"));
 		acmMain.setTitle("MSUM ACM Utility");
 		acmMain.setBounds(100, 100, 450, 300);
 		acmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,7 +157,7 @@ public class acm extends JFrame {
 		home.add(lblNewLabel);
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(sourceDir + "penguin_superhero.png"));
+		lblNewLabel.setIcon(new ImageIcon(this.dataFolder + "penguin_superhero.png"));
 		
 		//button container
 		JPanel panel = new JPanel();
@@ -184,7 +198,7 @@ public class acm extends JFrame {
 		//Final panel image
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setIcon(new ImageIcon(sourceDir + "penguin_superhero.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(this.dataFolder + "penguin_superhero.png"));
 		lblNewLabel_2.setBounds(0, 12, 448, 112);
 		finalPanel.add(lblNewLabel_2);
 		

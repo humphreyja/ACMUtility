@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name[en_US]=ACM-Util
+GenericName=ACM Website Post Creator and Editor
+Exec=java -jar /etc/msumacm/postgenerator/acm-util.jar
+Terminal=false
+Icon[en_US]=/etc/msumacm/postgenerator/data/penguin_superhero_icon.png
+Type=Application
+Categories=Application;ACM;Website;
+Comment[en_US]=ACM Website Post Creator and Editor
