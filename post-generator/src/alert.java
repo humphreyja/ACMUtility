@@ -9,6 +9,8 @@ public class alert extends post{
 		this.requireContent();
 		this.requireLocation();
 		this.requireDateTime();
+		this.postType = "info";
+		this.postLayout = "post";
 	}
 	
 	/**
@@ -16,7 +18,7 @@ public class alert extends post{
 	 * @return String post_datetime
 	 */
 	public String getPostDatetime() {
-		return post_datetime;
+		return  "date: " + post_datetime;
 	}
 	/**
 	 * Sets the post date time
@@ -31,7 +33,7 @@ public class alert extends post{
 	 * @return String post_location
 	 */
 	public String getPostLocation() {
-		return post_location;
+		return "location: " + post_location;
 	}
 	/**
 	 * Sets the post Location
@@ -43,7 +45,33 @@ public class alert extends post{
 	
 	public String[] getPostAttributesList()
 	{
-		String[] post_attributes = {this.getPostTitle(),this.getPostDatetime(),this.getPostLocation(),this.getPostContent()}; 
+		String[] post_attributes = {this.getPostTitle(),this.getPostDatetime(),this.getPostLocation()}; 
 		return post_attributes;
+	}
+
+	@Override
+	public boolean objectComplete() {
+		if(this.getPostTitle().isEmpty() || this.getPostDatetime().isEmpty() || this.getPostLocation().isEmpty() || this.getPostContent().isEmpty())
+			return false;
+		else
+			return true;
+	}
+
+	@Override
+	public void setPostPresentationData(String PresentationData) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPostAuthor(String author) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPostDuration(int Duration) {
+		// TODO Auto-generated method stub
+		
 	}
 }

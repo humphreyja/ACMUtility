@@ -3,7 +3,7 @@ public class workshop extends post{
 	private String post_author;
 	private String post_location;
 	private String post_datetime;
-	private String post_presentation_data;
+	private String post_presentation_data = "";
 	
 	workshop()
 	{
@@ -13,13 +13,15 @@ public class workshop extends post{
 		this.requireDateTime();
 		this.requirePresentationData();
 		this.requireLocation();
+		this.postType = "event";
+		this.postLayout = "post";
 	}
 	/**
 	 * Returns the post author
 	 * @return int post_author
 	 */
 	public String getPostAuthor() {
-		return post_author;
+		return  "author: \"" + post_author + "\"";
 	}
 	/**
 	 * Sets the post author
@@ -33,7 +35,7 @@ public class workshop extends post{
 	 * @return String post_datetime
 	 */
 	public String getPostDatetime() {
-		return post_datetime;
+		return  "date: " + post_datetime;
 	}
 	/**
 	 * Sets the post date time
@@ -48,7 +50,7 @@ public class workshop extends post{
 	 * @return String post_location
 	 */
 	public String getPostLocation() {
-		return post_location;
+		return  "location: " + post_location;
 	}
 	/**
 	 * Sets the post Location
@@ -62,7 +64,7 @@ public class workshop extends post{
 	 * @return String presentation_data
 	 */
 	public String getPostPresentationData() {
-		return post_presentation_data;
+		return  "presentation_data: " + this.getPreDataDir() + post_presentation_data;
 	}
 	/**
 	 * Sets the post presentation data
@@ -74,7 +76,20 @@ public class workshop extends post{
 	
 	public String[] getPostAttributesList()
 	{
-		String[] post_attributes = {this.getPostTitle(),this.getPostAuthor(),this.getPostDatetime(),this.getPostLocation(),this.getPostPresentationData(),this.getPostContent()}; 
+		String[] post_attributes = {this.getPostTitle(),this.getPostAuthor(),this.getPostDatetime(),this.getPostLocation(),this.getPostPresentationData()}; 
 		return post_attributes;
+	}
+	
+	@Override
+	public boolean objectComplete() {
+		if(this.getPostTitle().isEmpty() || this.getPostAuthor().isEmpty() || this.getPostDatetime().isEmpty() || this.getPostLocation().isEmpty() || this.getPostContent().isEmpty())
+			return false;
+		else
+			return true;
+	}
+	@Override
+	public void setPostDuration(int Duration) {
+		// TODO Auto-generated method stub
+		
 	}
 }

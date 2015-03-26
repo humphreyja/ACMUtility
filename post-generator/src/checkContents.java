@@ -8,10 +8,12 @@ public class checkContents {
 
 	public static boolean isDateValid(String date) 
 	{
+		System.out.println(date);
 	        try {
 	            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
 	            df.setLenient(false);
 	            df.parse(date);
+	            System.out.println("here");
 	            return true;
 	        } catch (ParseException e) {
 	            return false;

@@ -1,3 +1,11 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public abstract class post {
 	private String post_content;
 	private String post_title;
@@ -5,15 +13,74 @@ public abstract class post {
 	private boolean bauthor = false;
 	private boolean bcontent = false;
 	private boolean bdatetime = false;
-	private boolean bpresentationdate = false;
+	private boolean bpresentationdata = false;
 	private boolean bduration = false;
 	private boolean blocation = false;
+	private String repoLoc;
+	protected String postType;
+	protected String postLayout;
+	protected String postDir= File.separatorChar + "_posts" + File.separatorChar;
+	private String preDataDir = "/presentation-data/";
+	public static String[] postTypeList = {"Workshop","Article", "Notification"};
 	
-	/*
-	 * method to write to file
-	 * 
-	 * 
-	 */
+	protected String getPreDataDir()
+	{
+		return this.preDataDir;
+	}
+	
+	public String SafeTitle()
+	{
+		return this.post_title.replaceAll(" ", "-");
+	}
+	public void setRepoLoc(String dir)
+	{
+		this.repoLoc = dir;
+	}
+	public void writeFile()
+	{
+		if (this.objectComplete())
+        {
+			if(!this.repoLoc.equals(""))
+			{
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				try {
+					File file = new File(this.repoLoc + this.postDir + dateFormat.format(date) + "-" + this.SafeTitle() + ".markdown");
+					BufferedWriter output = new BufferedWriter(new FileWriter(file));
+					output.write("---");
+					output.newLine();
+	            	output.write("Layout: " + this.postLayout);
+	            	output.newLine();
+	            	for(String item : this.getPostAttributesList())
+	            	{
+	            		output.write(item);
+	            		output.newLine();
+	            	}
+	            	output.write("categories: " + this.postType);
+	            	output.newLine();
+	            	output.write("---");
+	            	output.newLine();
+	            	output.write(this.getPostContent());
+	            	output.newLine();
+	            	output.close();
+	            	System.out.println("Success!");
+				} catch (IOException e)
+				{
+					System.out.println("Fail");
+				}
+			}else{
+	           	System.out.println("Fail");
+			}
+		}
+	}
+	
+	public abstract void setPostAuthor(String author);
+	public abstract void setPostDatetime(String date, String time);
+	public abstract void setPostPresentationData(String PresentationData); 
+	public abstract void setPostDuration(int Duration);
+	public abstract void setPostLocation(String post_location);
+	
+	public abstract boolean objectComplete();
 	
 	/**
 	 * Returns true if the object uses the title form
@@ -72,13 +139,13 @@ public abstract class post {
 	 * @return boolean
 	 */
 	public boolean havePresentationData() {
-		return bpresentationdate;
+		return bpresentationdata;
 	}
 	/**
 	 * Sets the state of the object to require the use of a presentation data form
 	 */
 	public void requirePresentationData() {
-		this.bpresentationdate = true;
+		this.bpresentationdata = true;
 	}
 	/**
 	 * Returns true if the object uses the duration form
@@ -123,7 +190,7 @@ public abstract class post {
 	 */
 	public String getPostTitle()
 	{
-		return post_title;
+		return  "title: \"" + post_title + "\"";
 	}
 	/**
 	 * Sets the post content

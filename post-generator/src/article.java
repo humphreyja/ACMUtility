@@ -11,8 +11,9 @@ public class article extends post{
 		this.requireContent();
 		this.requireDateTime();
 		this.requireDuration();
-		
-		
+		this.requirePresentationData();
+		this.postType = "article";
+		this.postLayout = "article";
 	}
 	/**
 	 * Returns the post duration
@@ -27,7 +28,7 @@ public class article extends post{
 	 */
 	public String getPostDurationString()
 	{
-		return Integer.toString(this.post_duration);
+		return  "minutes-to-read: " + Integer.toString(this.post_duration);
 	}
 	/**
 	 * Sets the post duration
@@ -41,7 +42,7 @@ public class article extends post{
 	 * @return String post_datetime
 	 */
 	public String getPostDatetime() {
-		return post_datetime;
+		return  "date: " + post_datetime;
 	}
 	/**
 	 * Sets the post date time
@@ -56,7 +57,7 @@ public class article extends post{
 	 * @return int post_author
 	 */
 	public String getPostAuthor() {
-		return post_author;
+		return  "author: \"" + post_author + "\"";
 	}
 	/**
 	 * Sets the post author
@@ -69,7 +70,26 @@ public class article extends post{
 	
 	public String[] getPostAttributesList()
 	{
-		String[] post_attributes = {this.getPostTitle(),this.getPostAuthor(),this.getPostDatetime(),this.getPostDurationString(),this.getPostContent()}; 
+		String[] post_attributes = {this.getPostTitle(),this.getPostAuthor(),this.getPostDatetime(),this.getPostDurationString()}; 
 		return post_attributes;
+	}
+	
+	@Override
+	public boolean objectComplete() {
+		if(this.getPostTitle().isEmpty() || this.getPostAuthor().isEmpty() || this.getPostDatetime().isEmpty() || this.getPostDurationString().isEmpty() || this.getPostContent().isEmpty())
+			return false;
+		else
+			return true;
+	}
+	@Override
+	public void setPostPresentationData(String PresentationData) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void setPostLocation(String post_location) {
+		// TODO Auto-generated method stub
+		
 	}
 }

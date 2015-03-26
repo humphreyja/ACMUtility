@@ -63,7 +63,9 @@ public class datetime {
 		{
 			this.time = Time;
 		}else{
+			System.out.println(Time);
 			System.out.println("ERROR: Invalid time. Resetting time to 00:00:00");
+			this.time = "00:00:00";
 		}
 	}
 	
