@@ -5,14 +5,14 @@ if [ "$(id -u)" != "0" ]; then
         exit 1
 fi
 
-forceinstall=false
-if [[ $1 =~ "-f" ]];then
-	forceinstall=true;
+forceinstall=0
+if [[ "e$1" =~ "e-f" ]];then
+	forceinstall=1;
 fi 
 
-newfolder=true;
+newfolder=1;
 
-if [ $forceinstall ];then
+if [ $forceinstall -eq 1 ];then
 	echo "Forcing install..."
 else
 if [ -d /etc/msumacm ]; then
@@ -20,7 +20,7 @@ if [ -d /etc/msumacm ]; then
 	if [ ${#files[@]} -gt 0 ];then
         	msg="Directory '/etc/msumacm' already exists and is full"
 	else
-		newfolder=false;
+		newfolder=0;
 	fi
 fi
 if [ -f /bin/acm-util ];then
@@ -32,7 +32,7 @@ if [[ "e" != "e$msg" ]];then
 	echo "ERROR: $msg"
 	exit 1
 fi
-if [ $newfolder ];then
+if [ $newfolder -eq 1 ];then
 	mkdir /etc/msumacm
 fi
 mkdir /etc/msumacm/postgenerator
