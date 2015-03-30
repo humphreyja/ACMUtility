@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class post {
-	private String post_content;
-	private String post_title;
+	protected String post_content;
+	protected String post_title;
 	private boolean btitle = false;
 	private boolean bauthor = false;
 	private boolean bcontent = false;
@@ -16,12 +16,17 @@ public abstract class post {
 	private boolean bpresentationdata = false;
 	private boolean bduration = false;
 	private boolean blocation = false;
+	private boolean bleader = false;
+	private boolean bteam = false;
+	private boolean bexpand = false;
+	private boolean bfinished = false;
+	private boolean bsummary = false;
 	private String repoLoc;
 	protected String postType;
 	protected String postLayout;
 	protected String postDir= File.separatorChar + "_posts" + File.separatorChar;
-	private String preDataDir = "/presentation-data/";
-	public static String[] postTypeList = {"Workshop","Article", "Notification"};
+	private String preDataDir = File.separatorChar + "presentation-data" + File.separatorChar;
+	public static String[] postTypeList = {"Workshop","Article", "Notification","Project","Research"};
 	
 	protected String getPreDataDir()
 	{
@@ -30,13 +35,13 @@ public abstract class post {
 	
 	public String SafeTitle()
 	{
-		return this.post_title.replaceAll(" ", "-");
+		return this.post_title.trim().replaceAll(" ", "-");
 	}
 	public void setRepoLoc(String dir)
 	{
 		this.repoLoc = dir;
 	}
-	public void writeFile()
+	public boolean writeFile()
 	{
 		if (this.objectComplete())
         {
@@ -46,6 +51,8 @@ public abstract class post {
 				Date date = new Date();
 				try {
 					File file = new File(this.repoLoc + this.postDir + dateFormat.format(date) + "-" + this.SafeTitle() + ".markdown");
+					if(file.exists())
+						return false;
 					BufferedWriter output = new BufferedWriter(new FileWriter(file));
 					output.write("---");
 					output.newLine();
@@ -63,15 +70,15 @@ public abstract class post {
 	            	output.write(this.getPostContent());
 	            	output.newLine();
 	            	output.close();
-	            	System.out.println("Success!");
 				} catch (IOException e)
 				{
-					System.out.println("Fail");
+					return false;
 				}
 			}else{
-	           	System.out.println("Fail");
+	           	return false;
 			}
 		}
+		return true;
 	}
 	
 	public abstract void setPostAuthor(String author);
@@ -79,8 +86,46 @@ public abstract class post {
 	public abstract void setPostPresentationData(String PresentationData); 
 	public abstract void setPostDuration(int Duration);
 	public abstract void setPostLocation(String post_location);
+	public abstract void setPostTeam(String team);
+	public abstract void setPostExpand(boolean TorF);
+	public abstract void setPostFinished(boolean TorF);
+	public abstract void setPostSummary(String summary);
 	
 	public abstract boolean objectComplete();
+	
+	
+	
+	public boolean haveLeader() {
+		return this.bleader;
+	}
+	public void requireLeader(){
+		this.bleader = true;
+	}
+	
+	public boolean haveTeam() {
+		return this.bteam;
+	}
+	public void requireTeam(){
+		this.bteam = true;
+	}
+	public boolean haveExpand() {
+		return this.bexpand;
+	}
+	public void requireExpand(){
+		this.bexpand = true;
+	}
+	public boolean haveFinished() {
+		return this.bfinished;
+	}
+	public void requireFinished(){
+		this.bfinished = true;
+	}
+	public boolean haveSummary() {
+		return this.bsummary;
+	}
+	public void requireSummary(){
+		this.bsummary = true;
+	}
 	
 	/**
 	 * Returns true if the object uses the title form

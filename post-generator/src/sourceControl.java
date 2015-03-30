@@ -1,12 +1,13 @@
 import java.io.File;
-
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
 import edu.nyu.cs.javagit.api.JavaGitConfiguration;
 import edu.nyu.cs.javagit.api.JavaGitException;
+import edu.nyu.cs.javagit.api.WorkingTree;
 import edu.nyu.cs.javagit.api.commands.GitStatus;
+import edu.nyu.cs.javagit.api.commands.GitStatusResponse;
 
 
 public class sourceControl {
@@ -50,6 +51,34 @@ public class sourceControl {
 		
 		return true;
 	}
+	
+	public boolean commitPost(){
+		WorkingTree wt = WorkingTree.getInstance(new File(this.gitRepo));
+		try {
+			wt.add();
+			wt.commit("POST_GENERATOR: Adding new file to posts");
+			return true;
+		} catch (IOException | JavaGitException e1) {
+			GitStatus gitStatus = new GitStatus();
+			try {
+				GitStatusResponse re = gitStatus.status(new File(this.gitRepo));
+				int status = 0;
+				status += (re.getNewFilesToCommitSize() > 0)? 1 : 0;
+				status += (re.getModifiedFilesToCommitSize() > 0)? 1 : 0;
+				status += (re.getRenamedFilesToCommitSize() > 0)? 1 : 0;
+				status += (re.getUntrackedFilesSize() > 0)? 1 : 0;
+				status += (re.getDeletedFilesToCommitSize() > 0)? 1: 0;
+				if (status > 0)
+					return false;
+				else
+					return true;
+			} catch (JavaGitException | IOException e) {
+				//not a repository
+				return false;
+			}
+		}
+	}
+	
 	public String getGitUser() {
 		return gitUser;
 	}

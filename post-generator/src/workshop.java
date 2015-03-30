@@ -82,13 +82,33 @@ public class workshop extends post{
 	
 	@Override
 	public boolean objectComplete() {
-		if(this.getPostTitle().isEmpty() || this.getPostAuthor().isEmpty() || this.getPostDatetime().isEmpty() || this.getPostLocation().isEmpty() || this.getPostContent().isEmpty())
+		if(this.post_title.equals("") || this.post_author.equals("") || this.post_datetime.equals("") || this.post_location.equals("") || this.post_content.equals("") || this.post_content.equals("Post Content"))
 			return false;
 		else
 			return true;
 	}
 	@Override
 	public void setPostDuration(int Duration) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setPostTeam(String team) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setPostExpand(boolean TorF) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setPostFinished(boolean TorF) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setPostSummary(String summary) {
 		// TODO Auto-generated method stub
 		
 	}
