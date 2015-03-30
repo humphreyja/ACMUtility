@@ -1,4 +1,10 @@
-
+/**
+ * Post sub class to create workshops for jekyll
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class workshop extends post{
 	private String post_author;
 	private String post_location;

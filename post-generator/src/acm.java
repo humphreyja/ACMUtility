@@ -42,11 +42,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Launcher class for the ACM Utility Used to generate posts for the MSUM ACM Organization's Jekyll based website.
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class acm extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame acmMain;
 	private final JPanel home = new JPanel();
@@ -66,6 +70,12 @@ public class acm extends JFrame {
 	private File editFile;
 	private JTextField tfFileName;
 	
+	
+	/**
+	 * Checks if the given string is a valid int
+	 * @param num
+	 * @return boolean
+	 */
 	private boolean checkValidInt(String num)
 	{
 		try{
@@ -128,7 +138,9 @@ public class acm extends JFrame {
 			this.dataFolder = "/etc/msumacm/postgenerator/data/";
 			postWidth = 651;
 		}
+		//User settings file to contain the location of the repository
 		userFile = new File(this.userDataFile);
+		//sourceControl is used to check if the repository is valid
 		sourceControl gitObj = new sourceControl();
 		UserSettings userDataObj = new UserSettings();
 		userDataObj.setUserFile(userFile);

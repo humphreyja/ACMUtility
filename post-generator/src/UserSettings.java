@@ -15,6 +15,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
+/**
+ * Class to configure all user settings and store them in a settings xml file
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class UserSettings {
 	private String repoLocation = "";
 	private File userFile;

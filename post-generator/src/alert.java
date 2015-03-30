@@ -1,4 +1,11 @@
 
+/**
+ * Post sub class to create alert, or notifications, for jekyll
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class alert extends post{
 	private String post_location;
 	private String post_datetime;

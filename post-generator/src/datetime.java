@@ -4,6 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class to format and validate dates and time
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class datetime {
 	final static String DATE_FORMAT = "yyyy-MM-dd";
 	private String date;
@@ -45,7 +52,7 @@ public class datetime {
 	/**
 	  * Validate time in 24 hours format with regular expression
 	  * @param Time time address for validation
-	  * @return true valid time format, false invalid time format
+	  * @return boolean 
 	  */
 	public boolean validateTime(final String Time){
 

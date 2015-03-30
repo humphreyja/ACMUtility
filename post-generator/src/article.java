@@ -1,4 +1,10 @@
-
+/**
+ * Post sub class to create articles for jekyll
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class article extends post{
 	private String post_author;
 	private String post_datetime;

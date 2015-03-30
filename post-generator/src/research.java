@@ -1,6 +1,12 @@
 import java.io.File;
 
-
+/**
+ * Post sub class to create research for jekyll
+ * @author Jake Humphrey
+ * <br />MSUM ACM Organization Web Miester 
+ * <br />msumacm.org
+ * @version 1.0.0
+ */
 public class research extends post{
 	private String post_datetime;
 	private String post_leader;
