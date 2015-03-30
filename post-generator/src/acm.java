@@ -132,8 +132,8 @@ public class acm extends JFrame {
 		sourceControl gitObj = new sourceControl();
 		UserSettings userDataObj = new UserSettings();
 		userDataObj.setUserFile(userFile);
-		gitObj.setGitEmail("humphreyja@mnstate.edu");
-		gitObj.setGitUser("jake");
+		gitObj.setGitEmail("none");
+		gitObj.setGitUser("none");
 		if(userFile.exists() && !userFile.isDirectory())
 		{
 			if(userDataObj.checkDataFile())
